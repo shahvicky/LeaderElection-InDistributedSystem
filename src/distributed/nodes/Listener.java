@@ -14,7 +14,6 @@ public class Listener implements Runnable {
 	public void run() {
 		
 		try	{
-		
 			//Create a server socket at port 5000
 			ServerSocket serverSock = new ServerSocket(port);
 			System.out.println("Inside Listener");
