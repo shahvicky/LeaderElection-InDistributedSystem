@@ -9,6 +9,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 class pair2{
 	public HashMap node_details;
@@ -20,12 +22,25 @@ class pair2{
 }
 
 public class Node {
-
+	
+	static int noOfNeighbors;
+	static int dNumber= 0;		//d acc to Peleg
+	static int sendingUID;		//x acc to Peleg
+	static ConcurrentHashMap<String, String> blockingMapCurrent = new ConcurrentHashMap<>();
+	static ConcurrentHashMap<String, String> blockingMapNext = new ConcurrentHashMap<>();
+	static int leaderCounter;			//c acc to Peleg
+	static boolean isLeaderCandidate = true;		//b acc to Peleg
+	static int pulse = 1;				//p acc to Peleg
+	static String myUID = "";			//i acc to Peleg
+	static boolean isProcessing = false;
+	static boolean listenerSleeping = false;
+	
 
 	public static pair2 get_details(String key) throws IOException
 	{
 		
-		  File file = new File("C:\\users\\prabh\\Desktop\\dummy.txt");
+		  File file = new File("C:\\Users\\shahvicky1992\\Desktop\\DistributedProject\\dummy_copy.txt");
+		  
 		 
 		  BufferedReader br1 = new BufferedReader(new FileReader(file)); 
 		  br1.readLine();
@@ -74,32 +89,31 @@ public class Node {
 	public static void main(String[] args) throws IOException 
 	{
 		
-		String uid=args[0];
-		pair2 a= get_details(uid);
+		myUID=args[0];
+		sendingUID = Integer.parseInt(myUID);
+		pair2 a= get_details(myUID);
 			
 		HashMap node_details = a.node_details;
 		HashMap node_neighbors= a.node_neighbors;
 		
-		ArrayList curr_node= (ArrayList) node_details.get(uid);
-		ArrayList node_neighbor= (ArrayList) node_neighbors.get(uid);
+		ArrayList curr_node= (ArrayList) node_details.get(myUID);
+		ArrayList node_neighbor= (ArrayList) node_neighbors.get(myUID);
 		
-		
+		noOfNeighbors = node_neighbor.size();
+		System.out.println("noOfNeighbors" + noOfNeighbors);
+		System.out.println(node_neighbor);
 		
 		Listener listener = new Listener(Integer.parseInt((String) curr_node.get(1)));
 		Thread thread = new Thread(listener);
-		thread.start();
-    
-		int n = node_neighbor.size();
-		System.out.println(node_neighbor);
-		
-		int[] neighbors = new int[n];
-		for(int i=0; i< n; i++)
+		thread.start();	
+		int[] neighbors = new int[noOfNeighbors];
+		for(int i=0; i< noOfNeighbors; i++)
 		{
 			ArrayList temp= (ArrayList) node_details.get(node_neighbor.get(i));
 			neighbors[i] = Integer.parseInt((String) temp.get(1));
 		}
-		Sender sender = new Sender(neighbors);
-		sender.sendMessage();
+		Sender sender = new Sender(neighbors, sendingUID);
+		sender.sendMessage(sendingUID, dNumber, pulse);
 		
 		
 	}

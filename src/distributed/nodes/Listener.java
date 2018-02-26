@@ -20,6 +20,7 @@ public class Listener implements Runnable {
 			//Server goes into a permanent loop accepting connections from clients			
 			while(true)
 			{
+				
 				//Listens for a connection to be made to this socket and accepts it
 				//The method blocks until a connection is made
 				Receiver w;

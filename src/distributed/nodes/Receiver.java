@@ -20,18 +20,33 @@ public class Receiver implements Runnable {
 		PrintWriter out = null;
 
 		try {
+			/*while(Node.isProcessing) {
+				try {
+					Node.listenerSleeping = true;
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			Node.listenerSleeping = false;*/
 			in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 			out = new PrintWriter(client.getOutputStream(), true);
 			line = in.readLine();
-
-			System.out.println(line);
-			// send data back to the client
-			String line2 = "Hello From Server";
-			out.println(line2);
-			System.out.println("Message sent to client at: " + client.getPort());
-			line = in.readLine();
-
-
+			String[] messageReceived = line.split(":");
+			System.out.println(messageReceived[0]+" : "+ messageReceived[1]+" : "+ messageReceived[2]);
+			if(Node.blockingMapCurrent.containsKey(messageReceived[0])){
+				String value = Node.blockingMapCurrent.get(messageReceived[0]);
+				String[] valueArray = value.split(":");
+				System.out.println("Current Round:" + valueArray[1]);
+				System.out.println("Round received:" + messageReceived[2]);
+				if(messageReceived[2] != valueArray[1]){
+					System.out.println("*********Received Next Round Message");
+					Node.blockingMapNext.put(messageReceived[0], messageReceived[1]+":"+messageReceived[2]);
+				}
+			} else {
+				Node.blockingMapCurrent.put(messageReceived[0], messageReceived[1]+":"+messageReceived[2]);
+			}
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
