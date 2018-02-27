@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Logger;
 
 class pair2{
 	public HashMap node_details;
@@ -35,6 +36,7 @@ public class Node {
 	static boolean isProcessing = false;
 	static boolean listenerSleeping = false;
 	
+	private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
 	public static pair2 get_details(String key) throws IOException
 	{
