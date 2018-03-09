@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Pair2{
-	public HashMap node_details;
-	public HashMap node_neighbors;	
-	public Pair2( HashMap node_details1, HashMap node_neighbors1){
+	public HashMap<String,ArrayList<String>> node_details;
+	public HashMap<String,ArrayList<String>> node_neighbors;	
+	public Pair2( HashMap<String,ArrayList<String>> node_details1, HashMap<String,ArrayList<String>> node_neighbors1){
 		 node_details=  node_details1;
 		 node_neighbors=node_neighbors1;
 	}
@@ -30,7 +30,7 @@ public class Pair2{
 		  br1.readLine();
 		  br1.readLine();
 		  
-		  HashMap<String,ArrayList<String>>HS= new HashMap<String, ArrayList<String>>();
+		  HashMap<String,ArrayList<String>> HS= new HashMap<String, ArrayList<String>>();
 		  while (count>0)
 		  {
 			st=br1.readLine();

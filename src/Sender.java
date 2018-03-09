@@ -6,6 +6,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import javax.swing.DebugGraphics;
 
@@ -168,8 +169,8 @@ public class Sender {
   			    }
 			}
 			try {
-				logger.debug(hostArray[i]+portArray[i]+ " sent "+ msg.toString());
 				outputStream.writeObject(msg);
+				logger.debug(hostArray[i]+portArray[i]+ " sent "+ msg.toString());
 			} catch (IOException e) {
 				logger.error("IOException"+e);
 			}
@@ -178,7 +179,10 @@ public class Sender {
 		}  
 		if(msg.getDistance()== -1) {
 			try {
-				Thread.sleep(50000);
+				Node.leader = Node.sendingUID;
+				Node.buffer = new ConcurrentLinkedQueue<>();
+				Thread.sleep(10000);
+				Node.bfs.startBFS();
 			} catch (InterruptedException e) {
 				logger.error("Thread interrupted" + e);
 			}

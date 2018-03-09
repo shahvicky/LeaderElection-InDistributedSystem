@@ -1,10 +1,12 @@
 import java.io.Serializable;
 
 public class Message implements Serializable {
-
+	
 	private int xUID;
 	private int distance;
 	private int round;
+	private int degree;
+	private String msgType;			//"SEARCH" / "POSITIVEACK" / "NEGATIVEACK"
 	
 	public Message(){
 		this.round = 0;
@@ -35,8 +37,20 @@ public class Message implements Serializable {
 		this.round = round;
 	}
 
-	@Override
-	public String toString() {
-		return "Message [xUID=" + getxUID() + ", distance=" + getDistance() + ", round=" + getRound() + "]";
+	public int getDegree() {
+		return degree;
 	}
+
+	public void setDegree(int degree) {
+		this.degree = degree;
+	}
+
+	public String getMsgType() {
+		return msgType;
+	}
+
+	public void setMsgType(String msgType) {
+		this.msgType = msgType;
+	}
+
 }
