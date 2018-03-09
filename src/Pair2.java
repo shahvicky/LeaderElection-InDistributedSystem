@@ -1,18 +1,25 @@
-package distributed.nodes;
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
-public class Readconfig {
-
-	public static void main(String args[]) throws IOException
+public class Pair2{
+	public HashMap node_details;
+	public HashMap node_neighbors;	
+	public Pair2( HashMap node_details1, HashMap node_neighbors1){
+		 node_details=  node_details1;
+		 node_neighbors=node_neighbors1;
+	}
+	
+	
+	
+	public static Pair2 get_details(String key) throws IOException
 	{
 		
-		  BufferedReader br= new BufferedReader(new InputStreamReader(System.in));
-		  String node_id= br.readLine();	
-		  File file = new File("C:\\users\\prabh\\Desktop\\config.txt");
+		  File file = new File("C:\\Users\\shahvicky1992\\Desktop\\DistributedProject\\dummy_copy.txt");
+		  
 		 
 		  BufferedReader br1 = new BufferedReader(new FileReader(file)); 
 		  br1.readLine();
@@ -52,14 +59,9 @@ public class Readconfig {
 			st=br1.readLine();
 		  }
 		  br1.close();
-		  br.close();
-		  
-		 System.out.println(HS.get(node_id));
-		 System.out.println(HS_neighbor.get(node_id));
-		  
-		  
+		
+		Pair2 s = new Pair2(HS,HS_neighbor);
+		return s;
 	}
-			
-  }
-	
 
+}
