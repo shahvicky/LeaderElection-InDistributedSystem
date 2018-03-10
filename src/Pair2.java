@@ -15,6 +15,7 @@ public class Pair2{
 	
 	
 	
+	
 	public static Pair2 get_details(String key) throws IOException
 	{
 		
