@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -35,7 +36,14 @@ public class Node {
 
 	public static void main(String[] args) throws IOException {
 		
-		myUID=args[0];
+		HashMap<String, String> hostUIDM = Pair2.getHostUidMap();
+		
+		InetAddress inetAddress = InetAddress.getLocalHost();
+		String currentHost = inetAddress.getHostName();
+		logger.info(currentHost);
+		//myUID=args[0];
+		myUID = hostUIDM.get(currentHost);
+		logger.info(myUID);
 		sendingUID = Integer.parseInt(myUID);
 		Pair2 a= Pair2.get_details(myUID);
 		HashMap<String,ArrayList<String>> node_details = a.node_details;

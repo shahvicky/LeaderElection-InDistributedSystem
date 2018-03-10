@@ -18,9 +18,9 @@ public class Pair2{
 	public static Pair2 get_details(String key) throws IOException
 	{
 		
-		  File file = new File("C:\\Users\\shahvicky1992\\Desktop\\DistributedProject\\config2.txt");
+//		  File file = new File("C:\\Users\\shahvicky1992\\Desktop\\DistributedProject\\config2.txt");
 		  
-		 
+		  File file = new File("/home/013/p/pk/pkj170030/LeaderElection/bin/dummy.txt");
 		  BufferedReader br1 = new BufferedReader(new FileReader(file)); 
 		  br1.readLine();
 		  
@@ -63,5 +63,30 @@ public class Pair2{
 		Pair2 s = new Pair2(HS,HS_neighbor);
 		return s;
 	}
+	public static HashMap<String, String> getHostUidMap() throws IOException
+		{
+//			  File file = new File("C:\\Users\\shahvicky1992\\Desktop\\DistributedProject\\config2.txt");
+		      File file = new File("/home/013/p/pk/pkj170030/LeaderElection/bin/dummy.txt");	 
+			  BufferedReader br1 = new BufferedReader(new FileReader(file)); 
+			  br1.readLine();
+			  
+			  int count = Integer.parseInt(br1.readLine());
+			 
+			  String st;
+			  br1.readLine();
+			  br1.readLine();
+			  
+			  HashMap<String,String> Map_of_host_uid= new HashMap<String,String>();
+				 
+			  while (count>0)
+			  {
+				st=br1.readLine();
+				String[] a= st.split(" +");
+				Map_of_host_uid.put(a[2],a[1]);
+			    count=count-1;
+			  }
+			br1.close();
+			return Map_of_host_uid;		
+		}
 
 }

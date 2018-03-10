@@ -117,6 +117,7 @@ public class BuildBFS {
 		if(Node.degree == 0){
 			logger.info("*********Starting Convergecast*********");
 		}
+		logger.info("*********Parent UID*********:  " + Node.parentUID);
 		sendAckMessage(msg, Node.parentUID);
 		return;
 	}
