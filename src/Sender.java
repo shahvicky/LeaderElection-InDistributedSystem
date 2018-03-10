@@ -33,7 +33,7 @@ public class Sender {
 		
 	}
 	
-	public void pelegAlgorithm(ArrayList<Message> receivedMsgs){
+/*	public void pelegAlgorithm(ArrayList<Message> receivedMsgs){
 		Node.round.incrementAndGet();
 		int[] arr = processMsgs(receivedMsgs);		//arr[0] = maxUID, //arr[1]=maxD, //arr[2]=if ant d is -1
 		Message newMessage = new Message();
@@ -99,7 +99,7 @@ public class Sender {
 		return;
 	}
 	
-
+*/
 	private int[] processMsgs(ArrayList<Message> msgs) {
 		int maxUID = 0;
 		int maxD= 0;
@@ -169,7 +169,9 @@ public class Sender {
   			    }
 			}
 			try {
+				msg.setMsgType("ELECT");
 				outputStream.writeObject(msg);
+				outputStream.reset();
 				logger.debug(hostArray[i]+portArray[i]+ " sent "+ msg.toString());
 			} catch (IOException e) {
 				logger.error("IOException"+e);
@@ -180,8 +182,18 @@ public class Sender {
 		if(msg.getDistance()== -1) {
 			try {
 				Node.leader = Node.sendingUID;
-				Node.buffer = new ConcurrentLinkedQueue<>();
-				Thread.sleep(10000);
+				if(Integer.parseInt(Node.myUID) == Node.leader) {
+					Thread.sleep(8000);
+				} else {
+					logger.info("************LEADER ELECTED**********");
+					Thread.sleep(3000);
+				}
+				
+				Node.round.set(0);
+				Node.dNumber = 0;
+				Node.buffer.clear();
+				logger.debug("Buffer size" + Node.buffer.size());
+				logger.debug(Node.buffer.toString());
 				Node.bfs.startBFS();
 			} catch (InterruptedException e) {
 				logger.error("Thread interrupted" + e);
@@ -192,6 +204,7 @@ public class Sender {
 	
 	public void PelegMod(ArrayList<Message> receivedMsgs){
 		Node.round.incrementAndGet();
+		logger.info("Moving to round"+ Node.round.intValue());
 		int[] arr = processMsgs(receivedMsgs);		//arr[0] = maxUID, //arr[1]=maxD, //arr[2]=if ant d is -1
 		Message newMessage = new Message();
 		
@@ -227,7 +240,7 @@ public class Sender {
 			Node.leaderCounter++;
 			Node.dNumber = Node.dNumber > arr[1] ? Node.dNumber : arr[1];
 			if(Node.leaderCounter == 3 && Node.sendingUID == Integer.parseInt(Node.myUID) && Node.isLeaderCandidate) {
-				logger.info("*******************************LEADER******");
+				logger.info("***********I am the LEADER******");
 				newMessage.setDistance(-1);
 				newMessage.setxUID(Node.sendingUID);
 				newMessage.setRound(Node.round.intValue());

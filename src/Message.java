@@ -53,4 +53,10 @@ public class Message implements Serializable {
 		this.msgType = msgType;
 	}
 
+	@Override
+	public String toString() {
+		return "Message [xUID=" + xUID + ", distance=" + distance + ", round=" + round + ", degree=" + degree
+				+ ", msgType=" + msgType + "]";
+	}
+
 }

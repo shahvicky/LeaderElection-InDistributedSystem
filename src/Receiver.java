@@ -22,7 +22,7 @@ public class Receiver implements Runnable {
 			message = (Message) in.readObject();
 			if(message.getRound() < Node.round.intValue()){
 				logger.error("Earlier round msg received");
-				System.exit(0);
+				//System.exit(0);
 			}
 			Node.buffer.offer(message);
 			

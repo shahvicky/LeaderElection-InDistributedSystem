@@ -27,8 +27,10 @@ public class Node {
 	static boolean isDone = false;
 	static int depth=-1;
 	static int parentUID = -1;
-	static int degree= -1;
-	static final int noOfAckMsg = Node.noOfNeighbors;
+	static int degree= 0;
+	static int maxDegree = 0;
+	static int maxDegreeNode = -1;
+	static int noOfAckMsg;
 	static ArrayList<Integer> childList = new ArrayList<>();
 
 	public static void main(String[] args) throws IOException {
@@ -45,6 +47,7 @@ public class Node {
 		noOfNeighbors = node_neighbor.size();
 		//logger.debug("noOfNeighbors" + noOfNeighbors);
 		//logger.debug(node_neighbor);
+		noOfAckMsg = noOfNeighbors;
 		logger.debug(node_details.toString());
 		logger.debug(node_neighbors.toString());
 		int[] neighborPorts = new int[noOfNeighbors];
@@ -67,6 +70,7 @@ public class Node {
 		firstMessage.setDistance(dNumber);
 		firstMessage.setxUID(sendingUID);
 		firstMessage.setRound(round.intValue());
+		logger.info("*********Starting Leader Election***********");
 		sender.sendReceive(firstMessage);
 	}
 	

@@ -6,12 +6,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Pair2{
-	
-
-	public HashMap node_details;
-	public HashMap node_neighbors;	
-	
-	public Pair2( HashMap node_details1, HashMap node_neighbors1){
+	public HashMap<String,ArrayList<String>> node_details;
+	public HashMap<String,ArrayList<String>> node_neighbors;	
+	public Pair2( HashMap<String,ArrayList<String>> node_details1, HashMap<String,ArrayList<String>> node_neighbors1){
 		 node_details=  node_details1;
 		 node_neighbors=node_neighbors1;
 	}
@@ -21,7 +18,7 @@ public class Pair2{
 	public static Pair2 get_details(String key) throws IOException
 	{
 		
-		  File file = new File("/home/013/p/pk/pkj170030/LeaderElect/LeaderElection/bin/dummy.txt");
+		  File file = new File("C:\\Users\\shahvicky1992\\Desktop\\DistributedProject\\config2.txt");
 		  
 		 
 		  BufferedReader br1 = new BufferedReader(new FileReader(file)); 
@@ -33,9 +30,7 @@ public class Pair2{
 		  br1.readLine();
 		  br1.readLine();
 		  
-		  HashMap<String,ArrayList<String>>HS= new HashMap<String, ArrayList<String>>();
-		  
-			 
+		  HashMap<String,ArrayList<String>> HS= new HashMap<String, ArrayList<String>>();
 		  while (count>0)
 		  {
 			st=br1.readLine();
@@ -67,32 +62,6 @@ public class Pair2{
 		
 		Pair2 s = new Pair2(HS,HS_neighbor);
 		return s;
-	}
-	
-	public static HashMap<String, String> getHostUidMap() throws IOException
-	{
-		  File file = new File("/home/013/p/pk/pkj170030/LeaderElect/LeaderElection/bin/dummy.txt");
-		  		 
-		  BufferedReader br1 = new BufferedReader(new FileReader(file)); 
-		  br1.readLine();
-		  
-		  int count = Integer.parseInt(br1.readLine());
-		 
-		  String st;
-		  br1.readLine();
-		  br1.readLine();
-		  
-		  HashMap<String,String> Map_of_host_uid= new HashMap<String,String>();
-			 
-		  while (count>0)
-		  {
-			st=br1.readLine();
-			String[] a= st.split(" +");
-			Map_of_host_uid.put(a[2],a[1]);
-		    count=count-1;
-		  }
-		br1.close();
-		return Map_of_host_uid;		
 	}
 
 	
